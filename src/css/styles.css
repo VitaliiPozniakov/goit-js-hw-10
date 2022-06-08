@@ -18,3 +18,8 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+#form__input:focus-visible {
+  border: 1px solid #2196f3;
+  outline: none;
+}
