@@ -1,5 +1,5 @@
 
-export function makeCountryMarkup (countriesArr) {
+export function makeCountriesListMarkup (countriesArr) {
     return countriesArr
     .map((country) => {
        
@@ -12,7 +12,7 @@ src="${country.flags.svg}"
 width="50"
 height="30"
 />
-<h2>${country.name.official}</h2>
+<h2 class='country-name'>${country.name.official}</h2>
 </li>
 
           `;    

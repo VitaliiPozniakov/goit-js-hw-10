@@ -32,12 +32,17 @@ body {
   padding: 0px;
   margin: 0px;
   list-style: none;
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  margin: -15px;
-  margin-left: 15px;
+  margin: -15px; */
+  /* margin-left: 15px; */
+}
+
+li {
+  display: flex;
+  align-items: flex-end;
 }
 
 .overlay{
@@ -57,11 +62,13 @@ p {
 
 
 
-li {
+/* li {
   flex-basis: calc((100% - 4 * 30px) / 4);
-}
+} */
 
-li h2 {
+.country-name {
+  font-weight: 500;
+  font-style: 14px;
 
 }
 

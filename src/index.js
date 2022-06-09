@@ -16,32 +16,52 @@ const refs = {
 refs.input.addEventListener(`input`, debounce(onInputChange, 300));
 
 function onInputChange(e) {
-  console.log(e.target.value)
+//   console.log(e.target.value)
+const inputSymbols = e.target.value.trim() 
 
-//   fetchCountries(e.target.value)
-//     .then(
-//         (countriesArr) => {
-//         return countriesArr
-//         .map((country) => {
-//           return `
-//           <li>
-//     <img class='flag'
-//     alt="${country.name.official}"
-//     src="${country.flags.svg}"
-//     width="50"
-//     height="30"
-//     />
-//     <h2>${country.name.official}</h2>
-//     </li>
-//               `;    
-//             })
-//         .join("");
-//     })
-//     .then(renderCountriesList);
+console.log(inputSymbols)
 
-    // fetchCountries(e.target.value)
-    // .then(makeCountriesListMarkup)
-    // .then(renderCountriesList);
+if (inputSymbols === null || inputSymbols === ``) {
+//   alert(`Invalid value`);
+refs.countryInfo.innerHTML = ''
+refs.countryList.innerHTML = ''
+
+  return
+}
+
+  
+  const promiseCountryArr =  fetchCountries(inputSymbols)
+
+
+//   promiseCountryArr.then(
+//       (resolve) => console.log(resolve.length)
+//   )
+
+
+        promiseCountryArr
+        .then(makeCountriesListMarkup)
+        .then(renderCountriesList);
+
+        promiseCountryArr.then(makeCountryMarkup)
+        .then(renderCountryCard);
+
+
+    //   if (resolve.length > 1) {
+    //     .then(makeCountriesListMarkup)
+    //     .then(renderCountriesList);
+    //   } else {
+    //     .then(makeCountryMarkup)
+    //     .then(renderCountryCard);
+    //   }
+
+  
+
+
+
+
+
+
+
 
 
 }
@@ -54,5 +74,3 @@ function renderCountriesList (countriesListMarkup) {
     refs.countryList.innerHTML = countriesListMarkup;
   }
 
-// if (word === null || word.trim() === ``) {
-//   alert(`Invalid value`);
