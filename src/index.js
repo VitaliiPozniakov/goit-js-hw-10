@@ -5,8 +5,13 @@ import { makeCountriesListMarkup } from './makeCountriesListMarkup'
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import compiledTemplate from "./templates/country-card.hbs";
+import CountriesApiService from './countriesApiServise';
 
 const DEBOUNCE_DELAY = 300;
+
+const countriesApiServise = new CountriesApiService
+
+
 
 const refs = {
   input: document.querySelector(`#search-box`),
@@ -14,11 +19,13 @@ const refs = {
   countryInfo: document.querySelector(`.country-info`),
 };
 
-refs.input.addEventListener(`input`, debounce(onInputChange, 300));
+refs.input.addEventListener(`input`, debounce(onInputChange, DEBOUNCE_DELAY));
 
 function onInputChange(e) {
 //   console.log(e.target.value)
 const inputSymbols = e.target.value.trim() 
+
+countriesApiServise.query = e.target.value.trim() 
 
 // console.log(inputSymbols)
 
@@ -30,8 +37,21 @@ refs.countryList.innerHTML = ''
 }
 
   
-  const promiseCountryArr =  fetchCountries(inputSymbols)
 
+const promiseCountryArr = countriesApiServise.fetchCountries()
+
+// console.log(promiseCountryArr)
+
+        promiseCountryArr
+        .then(makeCountriesListMarkup)
+        .then(renderCountriesList)
+        .catch(showError);
+
+        promiseCountryArr
+        .then(makeCountryMarkup)
+        .then(renderCountryCard)
+        .catch(showError);
+        
 
 //   promiseCountryArr.then(
 //       (resolve) => console.log(resolve.length)
@@ -46,31 +66,9 @@ refs.countryList.innerHTML = ''
 
 //   )
 
-
-        promiseCountryArr
-        .then(makeCountriesListMarkup)
-        .then(renderCountriesList)
-        .catch(showError);
-
-        promiseCountryArr
-        .then(makeCountryMarkup)
-        .then(renderCountryCard)
-        .catch(showError);
-        
-
-
-
-  
-
-
-
-
-
-
-
-
-
 }
+
+
 
 function renderCountryCard(countryMarkup) {
   refs.countryInfo.innerHTML = countryMarkup;
