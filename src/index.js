@@ -1,7 +1,7 @@
 import './css/styles.css';
 import { fetchCountries } from './fetchCountries';
-import { makeCountryMarkup } from './makeCountryMarkup';
-import { makeCountriesListMarkup } from './makeCountriesListMarkup'
+// import { makeCountryMarkup } from './makeCountryMarkup';
+// import { makeCountriesListMarkup } from './makeCountriesListMarkup'
 import debounce from 'lodash.debounce';
 // import compiledTemplate from "./templates/country-card.hbs";
 
@@ -47,7 +47,6 @@ function onInputChange(e) {
     // .then(makeCountryMarkup)
     // .then(renderCountryCard);
 
-  console.log(fetchCountries(e.target.value).then(makeCountriesListMarkup));
 }
 
 function renderCountryCard(countryMarkup) {
