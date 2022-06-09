@@ -35,7 +35,7 @@ function onInputChange(e) {
   }
 
   const promiseCountryArr = countriesApiServise.fetchCountries();
-  // const promiseCountryArr =  fetchCountries(inputSymbols)
+//   const promiseCountryArr =  fetchCountries(inputSymbols)
 
   console.log(promiseCountryArr);
 
@@ -44,6 +44,7 @@ function onInputChange(e) {
 
     if (r.length > 10) {
       Notify.info('Too many matches found. Please enter a more specific name.');
+      refs.countryList.innerHTML = '';
       return;
     }
 
@@ -55,7 +56,7 @@ function onInputChange(e) {
       refs.countryList.innerHTML = '';
       return;
     }
-    
+
     promiseCountryArr
       .then(makeCountriesListMarkup)
       .then(renderCountriesList)
