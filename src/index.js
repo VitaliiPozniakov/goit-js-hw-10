@@ -3,6 +3,7 @@ import { fetchCountries } from './fetchCountries';
 import { makeCountryMarkup } from './makeCountryMarkup';
 import { makeCountriesListMarkup } from './makeCountriesListMarkup'
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import compiledTemplate from "./templates/country-card.hbs";
 
 const DEBOUNCE_DELAY = 300;
@@ -40,10 +41,14 @@ refs.countryList.innerHTML = ''
 
         promiseCountryArr
         .then(makeCountriesListMarkup)
-        .then(renderCountriesList);
+        .then(renderCountriesList)
+        .catch(showError);
 
-        promiseCountryArr.then(makeCountryMarkup)
-        .then(renderCountryCard);
+        promiseCountryArr
+        .then(makeCountryMarkup)
+        .then(renderCountryCard)
+        .catch(showError);
+        
 
 
     //   if (resolve.length > 1) {
@@ -72,5 +77,9 @@ function renderCountryCard(countryMarkup) {
 
 function renderCountriesList (countriesListMarkup) {
     refs.countryList.innerHTML = countriesListMarkup;
+  }
+
+  function showError (error) {
+   return Notify.failure('Oops, there is no country with that name');
   }
 
