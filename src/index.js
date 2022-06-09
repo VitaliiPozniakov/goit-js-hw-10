@@ -20,13 +20,12 @@ function onInputChange(e) {
 //   console.log(e.target.value)
 const inputSymbols = e.target.value.trim() 
 
-console.log(inputSymbols)
+// console.log(inputSymbols)
 
 if (inputSymbols === null || inputSymbols === ``) {
 //   alert(`Invalid value`);
 refs.countryInfo.innerHTML = ''
 refs.countryList.innerHTML = ''
-
   return
 }
 
@@ -36,6 +35,15 @@ refs.countryList.innerHTML = ''
 
 //   promiseCountryArr.then(
 //       (resolve) => console.log(resolve.length)
+//       if (resolve.length > 1) {
+//         .then(makeCountriesListMarkup)
+//         .then(renderCountriesList);
+//       } else {
+//         .then(makeCountryMarkup)
+//         .then(renderCountryCard);
+//       }
+
+
 //   )
 
 
@@ -51,13 +59,6 @@ refs.countryList.innerHTML = ''
         
 
 
-    //   if (resolve.length > 1) {
-    //     .then(makeCountriesListMarkup)
-    //     .then(renderCountriesList);
-    //   } else {
-    //     .then(makeCountryMarkup)
-    //     .then(renderCountryCard);
-    //   }
 
   
 
