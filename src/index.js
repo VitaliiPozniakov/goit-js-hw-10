@@ -1,6 +1,7 @@
 import './css/styles.css';
 import { fetchCountries } from './fetchCountries';
 import { makeCountryMarkup } from './makeCountryMarkup';
+import { makeCountriesListMarkup } from './makeCountriesListMarkup'
 import debounce from 'lodash.debounce';
 // import compiledTemplate from "./templates/country-card.hbs";
 
@@ -17,9 +18,13 @@ refs.input.addEventListener(`input`, debounce(onInputChange, 300));
 function onInputChange(e) {
   // console.log(e.target.value)
 
-  fetchCountries(e.target.value)
+//   fetchCountries(e.target.value)
+//     .then(makeCountriesListMarkup)
+//     .then(renderCountriesList);
+
+    fetchCountries(e.target.value)
     .then(makeCountryMarkup)
-    .then(renderCountryCard);
+    .then(makeCountryMarkup);
 
   console.log(fetchCountries(e.target.value));
 }
@@ -27,6 +32,10 @@ function onInputChange(e) {
 function renderCountryCard(countryMarkup) {
   refs.countryInfo.innerHTML = countryMarkup;
 }
+
+function renderCountriesList (countriesListMarkup) {
+    refs.countryList.innerHTML = countriesListMarkup;
+  }
 
 // if (word === null || word.trim() === ``) {
 //   alert(`Invalid value`);
