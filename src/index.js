@@ -28,20 +28,21 @@ function onInputChange(e) {
   // console.log(inputSymbols)
 
   if (inputSymbols === null || inputSymbols === ``) {
-    //   alert(`Invalid value`);
+ 
     refs.countryInfo.innerHTML = '';
     refs.countryList.innerHTML = '';
     return;
   }
 
-  const promiseCountryArr = countriesApiServise.fetchCountries();
-//   const promiseCountryArr =  fetchCountries(inputSymbols)
+// //   const promiseCountryArr = countriesApiServise.fetchCountries();
+  const promiseCountryArr =  fetchCountries(inputSymbols)
 
-  console.log(promiseCountryArr);
 
-  promiseCountryArr.then(r => {
-    console.log(r.length);
+  promiseCountryArr.catch(showError);
 
+
+  promiseCountryArr
+  .then(r => {
     if (r.length > 10) {
       Notify.info('Too many matches found. Please enter a more specific name.');
       refs.countryList.innerHTML = '';
@@ -74,6 +75,6 @@ function renderCountriesList(countriesListMarkup) {
 }
 
 function showError(error) {
-  console.log(`помилка ${error}`);
+//   console.log(`помилка ${error}`);
   return Notify.failure('Oops, there is no country with that name');
 }
