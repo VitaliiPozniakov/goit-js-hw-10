@@ -18,15 +18,36 @@ refs.input.addEventListener(`input`, debounce(onInputChange, 300));
 function onInputChange(e) {
   // console.log(e.target.value)
 
-//   fetchCountries(e.target.value)
-//     .then(makeCountriesListMarkup)
-//     .then(renderCountriesList);
+  fetchCountries(e.target.value)
+    .then((countriesArr) => {
+        return countriesArr
+        .map((country) => {
+           
+          return `
+    
+          <li>
+    <img class='flag'
+    alt="${country.name.official}"
+    src="${country.flags.svg}"
+    width="50"
+    height="30"
+    />
+    <h2>${country.name.official}</h2>
+    </li>
+    
+              `;    
+            })
+        .join("");
+    })
+    .then(renderCountriesList);
 
-    fetchCountries(e.target.value)
-    .then(makeCountryMarkup)
-    .then(makeCountryMarkup);
+    // console.log(countriesArr)
 
-  console.log(fetchCountries(e.target.value));
+    // fetchCountries(e.target.value)
+    // .then(makeCountryMarkup)
+    // .then(renderCountryCard);
+
+  console.log(fetchCountries(e.target.value).then(makeCountriesListMarkup));
 }
 
 function renderCountryCard(countryMarkup) {
