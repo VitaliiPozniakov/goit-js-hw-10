@@ -40,10 +40,9 @@ body {
   margin-left: 15px;
 }
 
-/* .overlay, .country-list{
-  display: flex;
-  align-items: center;
-} */
+.overlay{
+ margin-top: 30px;
+}
 
 h1,
 h2,
