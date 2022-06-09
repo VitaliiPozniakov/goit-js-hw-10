@@ -1,7 +1,7 @@
 import './css/styles.css';
 import { fetchCountries } from './fetchCountries';
 import { makeCountryMarkup } from './makeCountryMarkup';
-import { makeCountriesListMarkup } from './makeCountriesListMarkup'
+import { makeCountriesListMarkup } from './makeCountriesListMarkup';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import compiledTemplate from "./templates/country-card.hbs";
@@ -9,9 +9,7 @@ import CountriesApiService from './countriesApiServise';
 
 const DEBOUNCE_DELAY = 300;
 
-const countriesApiServise = new CountriesApiService
-
-
+const countriesApiServise = new CountriesApiService();
 
 const refs = {
   input: document.querySelector(`#search-box`),
@@ -22,63 +20,59 @@ const refs = {
 refs.input.addEventListener(`input`, debounce(onInputChange, DEBOUNCE_DELAY));
 
 function onInputChange(e) {
-//   console.log(e.target.value)
-const inputSymbols = e.target.value.trim() 
+  //   console.log(e.target.value)
+  const inputSymbols = e.target.value.trim();
 
-countriesApiServise.query = e.target.value.trim() 
+  countriesApiServise.query = e.target.value.trim();
 
-// console.log(inputSymbols)
+  // console.log(inputSymbols)
 
-if (inputSymbols === null || inputSymbols === ``) {
-//   alert(`Invalid value`);
-refs.countryInfo.innerHTML = ''
-refs.countryList.innerHTML = ''
-  return
-}
+  if (inputSymbols === null || inputSymbols === ``) {
+    //   alert(`Invalid value`);
+    refs.countryInfo.innerHTML = '';
+    refs.countryList.innerHTML = '';
+    return;
+  }
 
-  
+  const promiseCountryArr = countriesApiServise.fetchCountries();
+  // const promiseCountryArr =  fetchCountries(inputSymbols)
 
-const promiseCountryArr = countriesApiServise.fetchCountries()
+  console.log(promiseCountryArr);
 
-// console.log(promiseCountryArr)
+  promiseCountryArr.then(r => {
+    console.log(r.length);
 
-        promiseCountryArr
-        .then(makeCountriesListMarkup)
-        .then(renderCountriesList)
-        .catch(showError);
+    if (r.length > 10) {
+      Notify.info('Too many matches found. Please enter a more specific name.');
+      return;
+    }
 
-        promiseCountryArr
+    if (r.length === 1) {
+      promiseCountryArr
         .then(makeCountryMarkup)
         .then(renderCountryCard)
         .catch(showError);
-        
-
-//   promiseCountryArr.then(
-//       (resolve) => console.log(resolve.length)
-//       if (resolve.length > 1) {
-//         .then(makeCountriesListMarkup)
-//         .then(renderCountriesList);
-//       } else {
-//         .then(makeCountryMarkup)
-//         .then(renderCountryCard);
-//       }
-
-
-//   )
-
+      refs.countryList.innerHTML = '';
+      return;
+    }
+    
+    promiseCountryArr
+      .then(makeCountriesListMarkup)
+      .then(renderCountriesList)
+      .catch(showError);
+    refs.countryInfo.innerHTML = '';
+  });
 }
-
-
 
 function renderCountryCard(countryMarkup) {
   refs.countryInfo.innerHTML = countryMarkup;
 }
 
-function renderCountriesList (countriesListMarkup) {
-    refs.countryList.innerHTML = countriesListMarkup;
-  }
+function renderCountriesList(countriesListMarkup) {
+  refs.countryList.innerHTML = countriesListMarkup;
+}
 
-  function showError (error) {
-   return Notify.failure('Oops, there is no country with that name');
-  }
-
+function showError(error) {
+  console.log(`помилка ${error}`);
+  return Notify.failure('Oops, there is no country with that name');
+}
