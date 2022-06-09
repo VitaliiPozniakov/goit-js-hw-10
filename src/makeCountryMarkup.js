@@ -1,4 +1,5 @@
 
+
 export function makeCountryMarkup (chooseCountry) {
     return chooseCountry
     .map(({population, name: {official}, flags:{svg}, capital, languages}) => {
@@ -21,5 +22,3 @@ height="30"
         })
     .join("");
 }
-
-

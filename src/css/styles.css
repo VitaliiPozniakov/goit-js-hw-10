@@ -19,12 +19,12 @@ body {
   margin-bottom: 16px;
 }
 
-#form__input:focus-visible {
+#search-box:focus-visible {
   border: 1px solid #2196f3;
   outline: none;
 }
 
-.overlay{
+.overlay, .country-list{
   display: flex;
   align-items: center;
 }
