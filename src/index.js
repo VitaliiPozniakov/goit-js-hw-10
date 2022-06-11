@@ -20,25 +20,30 @@ const refs = {
 refs.input.addEventListener(`input`, debounce(onInputChange, DEBOUNCE_DELAY));
 
 function onInputChange(e) {
-  //   console.log(e.target.value)
+
   const inputSymbols = e.target.value.trim();
+      console.log(inputSymbols)
 
-  countriesApiServise.query = e.target.value.trim();
+//   countriesApiServise.query = e.target.value.trim();
 
-  // console.log(inputSymbols)
 
-  if (inputSymbols === null || inputSymbols === ``) {
+
+//   if (inputSymbols === null || inputSymbols === ``) {
  
-    refs.countryInfo.innerHTML = '';
-    refs.countryList.innerHTML = '';
-    return;
-  }
+//     refs.countryInfo.innerHTML = '';
+//     refs.countryList.innerHTML = '';
+//     return;
+//   }
 
-// //   const promiseCountryArr = countriesApiServise.fetchCountries();
+// // //   const promiseCountryArr = countriesApiServise.fetchCountries();
   const promiseCountryArr =  fetchCountries(inputSymbols)
 
+  console.log(promiseCountryArr)
 
-  promiseCountryArr.catch(showError);
+
+
+
+  promiseCountryArr.catch(showError)
 
 
   promiseCountryArr
