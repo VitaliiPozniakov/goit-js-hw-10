@@ -5,11 +5,11 @@ import { makeCountriesListMarkup } from './makeCountriesListMarkup';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import compiledTemplate from "./templates/country-card.hbs";
-import CountriesApiService from './countriesApiServise';
+// import CountriesApiService from './countriesApiServise';
 
 const DEBOUNCE_DELAY = 300;
 
-const countriesApiServise = new CountriesApiService();
+// const countriesApiServise = new CountriesApiService();
 
 const refs = {
   input: document.querySelector(`#search-box`),
@@ -20,34 +20,25 @@ const refs = {
 refs.input.addEventListener(`input`, debounce(onInputChange, DEBOUNCE_DELAY));
 
 function onInputChange(e) {
-
   const inputSymbols = e.target.value.trim();
-      console.log(inputSymbols)
+  //   console.log(inputSymbols)
 
-//   countriesApiServise.query = e.target.value.trim();
+  //   countriesApiServise.query = e.target.value.trim();
 
+  if (inputSymbols === null || inputSymbols === ``) {
+    refs.countryInfo.innerHTML = '';
+    refs.countryList.innerHTML = '';
+    return;
+  }
 
+  // // //   const promiseCountryArr = countriesApiServise.fetchCountries();
+  const promiseCountryArr = fetchCountries(inputSymbols);
 
-//   if (inputSymbols === null || inputSymbols === ``) {
- 
-//     refs.countryInfo.innerHTML = '';
-//     refs.countryList.innerHTML = '';
-//     return;
-//   }
+  //   console.log(promiseCountryArr)
 
-// // //   const promiseCountryArr = countriesApiServise.fetchCountries();
-  const promiseCountryArr =  fetchCountries(inputSymbols)
+  promiseCountryArr.catch(showError);
 
-  console.log(promiseCountryArr)
-
-
-
-
-  promiseCountryArr.catch(showError)
-
-
-  promiseCountryArr
-  .then(r => {
+  promiseCountryArr.then(r => {
     if (r.length > 10) {
       Notify.info('Too many matches found. Please enter a more specific name.');
       refs.countryList.innerHTML = '';
@@ -80,6 +71,6 @@ function renderCountriesList(countriesListMarkup) {
 }
 
 function showError(error) {
-//   console.log(`помилка ${error}`);
+  //   console.log(`помилка ${error}`);
   return Notify.failure('Oops, there is no country with that name');
 }
