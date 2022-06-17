@@ -34,32 +34,32 @@ function onInputChange(e) {
   // // //   const promiseCountryArr = countriesApiServise.fetchCountries();
   const promiseCountryArr = fetchCountries(inputSymbols);
 
-  //   console.log(promiseCountryArr)
+  promiseCountryArr
+    .then(r => {
+      if (r.length > 10) {
+        Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+        refs.countryList.innerHTML = '';
+        return;
+      }
 
-  promiseCountryArr.catch(showError);
+      if (r.length === 1) {
+        promiseCountryArr
+          .then(makeCountryMarkup)
+          .then(renderCountryCard)
+          .catch(showError);
+        refs.countryList.innerHTML = '';
+        return;
+      }
 
-  promiseCountryArr.then(r => {
-    if (r.length > 10) {
-      Notify.info('Too many matches found. Please enter a more specific name.');
-      refs.countryList.innerHTML = '';
-      return;
-    }
-
-    if (r.length === 1) {
       promiseCountryArr
-        .then(makeCountryMarkup)
-        .then(renderCountryCard)
+        .then(makeCountriesListMarkup)
+        .then(renderCountriesList)
         .catch(showError);
-      refs.countryList.innerHTML = '';
-      return;
-    }
-
-    promiseCountryArr
-      .then(makeCountriesListMarkup)
-      .then(renderCountriesList)
-      .catch(showError);
-    refs.countryInfo.innerHTML = '';
-  });
+      refs.countryInfo.innerHTML = '';
+    })
+    .catch(showError);
 }
 
 function renderCountryCard(countryMarkup) {
